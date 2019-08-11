@@ -74,7 +74,7 @@ async def get_member(person):
         return discord.utils.get([i.user for i in server.bans()], id = person) 
 
 async def dayjail(person, days):
-    await reports.send(person.name+ " is jailed for " + str(days) + " day(s), due to gaining too many strikes.")
+    await reports.send("``" + person.name+ "`` is jailed for ``" + str(days) + "`` day(s), due to gaining too many strikes.")
     global ignorejail
     ignorejail = person.id
     try:
@@ -85,28 +85,28 @@ async def dayjail(person, days):
     add_punishment("unjail", person, datetime.timedelta(days = 1))
 
 async def permjail(person):
-    await reports.send(person.name+ " is jailed, due to gaining too many strikes. Write an essay to get out.")
+    await reports.send("``" + person.name+ "`` is jailed, due to gaining too many strikes. Write an essay to get out.")
     await person.add_roles(jail)
     
 async def unjail(person):
-    await reports.send(person.name+ " is unjailed!")
+    await reports.send("``" + person.name+ "`` is unjailed!")
     await person.remove_roles(jail)
 
 async def weekban(person):
-    await reports.send(person.name+ " is banned for a week, due to gaining too many strikes.")
+    await reports.send("``" + person.name+ "`` is banned for a week, due to gaining too many strikes.")
     await server.ban(person)
     add_punishment("unban", person, datetime.timedelta(weeks = 1))
 
 async def unban(person):
-    await reports.send(person.name+ " is unbanned!")
+    await reports.send("``" + person.name+ "`` is unbanned!")
     await server.unban(person)
 
 async def permban(person):
-    await reports.send(person.name+ " is permanently banned, due to gaining too many strikes.")
+    await reports.send("**``" + person.name+ "`` is permanently banned, due to gaining too many strikes.**")
     await server.ban(person)
 
 async def strike_decay(person):
-    await reports.send(person.name+ " has lost a strike due to strike decay!")
+    await reports.send("``" + person.name+ "`` has lost a strike due to strike decay!")
     if strikesdb.get(person.id) != b'0':
         strikesdb.decr(person.id)
         add_punishment("strike_decay", person, datetime.timedelta(weeks = 1))
@@ -158,7 +158,7 @@ async def jail(ctx, member: discord.Member, duration: str, reason = ""):
     if durat != None:
         add_punishment("unjail", member, parse_duration(duration))
         ignorejail = member.id
-        await reports.send(member.name + " is jailed for " + duration + " because: " + reason)
+        await reports.send("``" + member.name + "`` is jailed for ``" + duration + "`` because: ``" + reason + "``")
         await strike(member)
 
 async def unpunish_loop():
